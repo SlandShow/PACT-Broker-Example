@@ -1,0 +1,33 @@
+{
+  "provider": {
+    "name": "B"
+  },
+  "consumer": {
+    "name": "A"
+  },
+  "interactions": [
+    {
+      "description": "test request",
+      "request": {
+        "method": "GET",
+        "path": "/test"
+      },
+      "response": {
+        "status": 200
+      },
+      "providerStates": [
+        {
+          "name": "test"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "3.6.3"
+    }
+  }
+}
