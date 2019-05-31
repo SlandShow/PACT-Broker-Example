@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.5.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.slandshow</groupId>
     <artifactId>demo</artifactId>
@@ -30,7 +30,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
@@ -42,7 +41,6 @@
             <artifactId>springfox-swagger2</artifactId>
             <version>2.9.2</version>
         </dependency>
-
 
         <dependency>
             <groupId>io.springfox</groupId>
@@ -56,7 +54,6 @@
             <version>3.6.3</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/au.com.dius/pact-jvm-provider-spring -->
         <dependency>
             <groupId>au.com.dius</groupId>
             <artifactId>pact-jvm-provider-spring_2.12</artifactId>
@@ -73,6 +70,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
+            <!-- Generates swagger yaml in target -->
+            <!-- (Better to share this swagger yaml on Nexus) -->
             <plugin>
                 <groupId>com.github.kongchen</groupId>
                 <artifactId>swagger-maven-plugin</artifactId>
@@ -85,7 +84,6 @@
                                 <location>com.slandshow.demo</location>
                             </locations>
                             <outputFormats>yaml</outputFormats>
-                            <!--<host>localhost:8080</host>-->
                             <schemes>
                                 <scheme>http</scheme>
                             </schemes>
@@ -122,14 +120,14 @@
                 </executions>
             </plugin>
 
+            <!-- Verify PACT interaction from broker and marked as 'verified' -->
+            <!-- But, this plugin works separately from Spring Boot context -->
+            <!-- So, if you want to use it, first run application and next mvn pact:verify -->
             <plugin>
                 <groupId>au.com.dius</groupId>
                 <artifactId>pact-jvm-provider-maven_2.12</artifactId>
                 <version>3.5.17</version>
                 <configuration>
-                    <!--<pact.verifier.publishResults>-->
-                        <!--true-->
-                    <!--</pact.verifier.publishResults>-->
                     <serviceProviders>
                         <!-- You can define as many as you need, but each must have a unique name -->
                         <serviceProvider>
@@ -139,25 +137,12 @@
                             <host>localhost</host>
                             <port>7073</port>
                             <path>/</path>
+                            <!-- And also it needs PACT broker -->
                             <pactBrokerUrl>http://localhost:80</pactBrokerUrl>
                         </serviceProvider>
                     </serviceProviders>
                 </configuration>
             </plugin>
-
-            <!--<plugin>-->
-                <!--<groupId>au.com.dius</groupId>-->
-                <!--<artifactId>pact-jvm-provider-maven_2.12</artifactId>-->
-                <!--<version>3.5.11</version>-->
-                <!--<configuration>-->
-                    <!--<serviceProviders>-->
-                        <!--<serviceProvider>-->
-                            <!--<name>B</name>-->
-                            <!--<pactBrokerUrl>http://localhost:80</pactBrokerUrl>-->
-                        <!--</serviceProvider>-->
-                    <!--</serviceProviders>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
 
         </plugins>
     </build>
