@@ -68,7 +68,7 @@ Just use [docker compose](https://docs.docker.com/compose/overview/ "docker comp
 
 1. Run Broker.
 
-2. `cd Consumer' and build the project via 'mvn clean install`. Also, you can run this app, [swagger-ui](https://swagger.io/tools/swagger-ui/ "Swagger UI") is available on `http://localhost:8080/swagger-ui.html`.
+2. `cd Consumer` and build the project via `mvn clean install`. Also, you can run this app, [swagger-ui](https://swagger.io/tools/swagger-ui/ "Swagger UI") is available on `http://localhost:8080/swagger-ui.html`.
 
-3. ` cd ..` and `cd Provider`. Build the project via 'mvn clean install`. And run tit next, [swagger-ui](https://swagger.io/tools/swagger-ui/ "Swagger UI") is available on `http://localhost:7073/swagger-ui.html`.
+3. ` cd ..` and `cd Provider`. Build the project via `mvn clean install`. And run tit next, [swagger-ui](https://swagger.io/tools/swagger-ui/ "Swagger UI") is available on `http://localhost:7073/swagger-ui.html`.
 Then use `mvn pact:verify` in additional terminal, it will verify PACT Broker test.
