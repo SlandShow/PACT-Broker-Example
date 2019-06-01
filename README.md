@@ -35,11 +35,46 @@ Here is an example of how consumer share pact files on broker:
 
 [*Consumer test*](https://github.com/SlandShow/PACT-Broker-Example/blob/master/Consumer/src/test/java/comslandshow/demo/DemoApplicationTests.java "consumer test") generate json in target file, when it exetutes via Spring Boot context. And next step on maven plugin, which share this json on broker. It's pretty easy and can be executed in CI Job.
 
+## Usage of Consumer
+
+Build Comsumer:
+```
+mvn clean install
+```
+
+Then run:
+```
+mvn spring-boot:run
+```
+
+Consumer application have [swagger-ui](https://swagger.io/tools/swagger-ui/ "Swagger UI") is available on `http://localhost:8080/swagger-ui.html`
+
 ## Provider
 [*Provider*](https://github.com/SlandShow/PACT-Broker-Example/tree/master/Provider "Provider") - a service or server that provides the data.
 
 Provider must verify interaction from broker. If interaction succesfully verified - broker mark it via `green` color, if not - via `red` color.
 For more info, read [next](https://github.com/SlandShow/PACT-Broker-Example/new/master?readme=1#broker) part of documentation.
+
+## Usage of Provider
+
+Build Provider:
+```
+mvn clean install
+```
+
+If you want to verify interaction on briker, first run application:
+```
+mvn spring-boot:run
+```
+
+And in additional terminal use plugin to verify:
+```
+mvn pact:verify
+```
+It's important, because naven plugin for verify PACT works upon of Spring Boot application context. 
+The oddity is that when performing Spring Boot tests with a raised context, the consumer still takes the JSON from the broker. Only except for the fact that he does not mark them as "verified".
+
+Provider application have [swagger-ui](https://swagger.io/tools/swagger-ui/ "Swagger UI") is available on `http://localhost:7073/swagger-ui.html`
 
 ## Broker
 The Pact Broker is an application for sharing for consumer driven contracts and verification results. It is optimised for use with "pacts" (contracts created by the Pact framework), but can be used for any type of contract that can be serialized to JSON.
