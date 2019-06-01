@@ -97,13 +97,16 @@ For example.
 
 ## How to run PACT Broker on my local machine?
 Just use [docker compose](https://docs.docker.com/compose/overview/ "docker compose"):
-`docker-compose --file docker-compose-pact.yaml  up --build` and then open [http://localhost:80](http://localhost:80).
+```
+docker-compose --file docker-compose-pact.yaml  up --build
+```
+And then open:
+[http://localhost:80](http://localhost:80)
 
 ## How can i use this example?
 
-1. Run Broker.
+1. [Run Broker](https://github.com/SlandShow/PACT-Broker-Example#how-to-run-pact-broker-on-my-local-machine "Run Broker")
 
-2. `cd Consumer` and build the project via `mvn clean install`. Also, you can run this app (`mvn spring-boot:run`), [swagger-ui](https://swagger.io/tools/swagger-ui/ "Swagger UI") is available on `http://localhost:8080/swagger-ui.html`.
+2. [Run Consumer](https://github.com/SlandShow/PACT-Broker-Example/blob/master/README.md#usage-of-consumer "How to run consumer")
 
-3. ` cd ..` and `cd Provider`. Build the project via `mvn clean install`. And run it next (`mvn spring-boot:run`), [swagger-ui](https://swagger.io/tools/swagger-ui/ "Swagger UI") is available on `http://localhost:7073/swagger-ui.html`.
-Then use `mvn pact:verify` in additional terminal, it will verify PACT Broker test.
+3. [Run Provider](https://github.com/SlandShow/PACT-Broker-Example#usage-of-provider "How to run provider")
