@@ -106,6 +106,96 @@ docker-compose --file docker-compose-pact.yaml  up --build
 And then open:
 [http://localhost:80](http://localhost:80)
 
+## Swagger codegen
+In this example swagger definition used for API generation. Here we generate YAML swagger definition for Provider (swagger file located in target folder):
+```
+             <plugin>
+                <groupId>com.github.kongchen</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <version>3.1.7</version>
+                <configuration>
+                    <apiSources>
+                        <apiSource>
+                            <springmvc>true</springmvc>
+                            <locations>
+                                <location>com.slandshow.demo</location>
+                            </locations>
+                            <outputFormats>yaml</outputFormats>
+                            <schemes>
+                                <scheme>http</scheme>
+                            </schemes>
+                            <info>
+                                <title>PACT Provider</title>
+                                <version>1.0</version>
+                                <description>Nothing</description>
+                            </info>
+                            <swaggerDirectory>${basedir}/target/swagger/temp</swaggerDirectory>
+                            <swaggerApiReader>com.github.kongchen.swagger.docgen.reader.SpringMvcApiReader
+                            </swaggerApiReader>
+                            <swaggerFileName>internal-swagger</swaggerFileName>
+                        </apiSource>
+                    </apiSources>
+                </configuration>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <apiSources>
+                                <apiSource>
+                                    <locations>
+                                        <location>com.slandshow.demo</location>
+                                    </locations>
+                                    <swaggerFileName>internal-swagger</swaggerFileName>
+                                </apiSource>
+                            </apiSources>
+                        </configuration>
+                        <id>internal-generation</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+```
+
+And in Consumer we generate code via maven plugin according on this YAML swagger file:
+```
+            <plugin>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>2.2.3</version>
+                <executions>
+                    <execution>
+                        <id>generate-swagger-javaclient</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <!-- In enterprise projects this swagger yaml specification must be verified from Nexus-->
+                            <!-- But here it just hardcored -->
+                            <inputSpec>${basedir}/src/main/resources/api.yaml</inputSpec>
+                            <language>java</language>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+                            <library>resttemplate</library>
+                            <modelPackage>${project.groupId}.client.model</modelPackage>
+                            <apiPackage>${project.groupId}.client.api</apiPackage>
+                            <invokerPackage>${project.groupId}.client.invoker</invokerPackage>
+                            <importMappings>
+                                <importMapping>ByteArrayResource=org.springframework.core.io.ByteArrayResource
+                                </importMapping>
+                            </importMappings>
+                            <configOptions>
+                                <dateLibrary>java8-localdatetime</dateLibrary>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+```
+
+So, Provider generates [RestTemplate](https://www.baeldung.com/rest-template "RestTemplate") api for Consumer. We can invoke Provider from Consumer using this generated client api. This is a main idea for communication between two microservices.
+
 ## How can i use this example?
 
 1. [Run Broker](https://github.com/SlandShow/PACT-Broker-Example#how-to-run-pact-broker-on-my-local-machine "Run Broker")
