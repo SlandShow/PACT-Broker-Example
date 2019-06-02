@@ -49,6 +49,9 @@ mvn spring-boot:run
 
 Consumer application have [swagger-ui](https://swagger.io/tools/swagger-ui/ "Swagger UI") is available on `http://localhost:8080/swagger-ui.html`
 
+Example of Consumer interaction on broker:
+![broker not found](https://i.ibb.co/G3677qp/2019-06-02-15-56-38.png)
+
 ## Provider
 [*Provider*](https://github.com/SlandShow/PACT-Broker-Example/tree/master/Provider "Provider") - a service or server that provides the data.
 
