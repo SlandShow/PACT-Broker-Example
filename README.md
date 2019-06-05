@@ -98,6 +98,18 @@ For example.
 
 ![broker not found](https://i.ibb.co/rsRdRMp/2019-06-01-01-05-55.png)
 
+## HTTP PACT publishing & retrieving
+We can use [HTTP REST calls](https://github.com/pact-foundation/pact_broker/wiki/Publishing-and-retrieving-pacts "PACT REST HTTP") to broker. You most likely won't need to get your hands dirty with curl however, as pact publishing is built in to most of the native pact libraries already.
+
+For example:
+
+1. `cd Consumer`
+
+2. In console use next cUrl:
+```
+curl -v -XPUT -H "Content-Type: application/json" -d@foo-bar.json http://localhost:80/pacts/provider/Bar/consumer/Foo/version/1.0.0+4jvh387gj3
+```
+
 ## How to run PACT Broker on my local machine?
 Just use [docker compose](https://docs.docker.com/compose/overview/ "docker compose"):
 ```
